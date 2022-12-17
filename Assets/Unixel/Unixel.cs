@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +12,10 @@ namespace Unixel
 
         private void Start()
         {
-            Debug.Log("baseStart");
             unixelInitData = UnixelInit();
             mesh = new Mesh();
             Init();
+            StartCoroutine(MainLoopCorountine());
         }
 
         private void Update()
@@ -52,6 +54,25 @@ namespace Unixel
                 new Vector2(1,1),
                 new Vector2(1,0),
             });
+        }
+
+        private IEnumerator MainLoopCorountine()
+        {
+            DateTime prevTime = DateTime.Now;
+            double fpsBet = 1 / (double)unixelInitData.fps;
+            Debug.Log(fpsBet);
+
+            while (true)
+            {
+                if ((DateTime.Now - prevTime).TotalSeconds >= fpsBet)
+                {
+                    prevTime = DateTime.Now;
+
+                    Draw();
+                }
+
+                yield return null;
+            }
         }
 
         virtual protected void Init() { }

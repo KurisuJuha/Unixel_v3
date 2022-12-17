@@ -14,7 +14,7 @@ namespace JuhaKurisu
 
         protected override void Draw()
         {
-
+            Debug.Log("draw");
         }
 
         protected override UnixelInitData UnixelInit()
